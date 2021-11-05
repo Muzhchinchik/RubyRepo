@@ -1,3 +1,9 @@
+##
+# Create temp file in selected directory
+#
+# @param path [String] path to temp file
+#
+#
 def create_temp_file(path)
   dir = File.dirname(path)
 
@@ -8,7 +14,12 @@ def create_temp_file(path)
   a = File.new(path, 'w+')
   a.close
 end
-
+##
+# Delete directory including all files
+#
+# @param path [String] path to temp directory
+#
+#
 def delete_temp_file(path)
   FileUtils.rm_rf(path)
 end
