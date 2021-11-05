@@ -1,18 +1,15 @@
 require 'fileutils'
-require 'pry'
 require 'rake'
+require './functions/test_functions'
 
 RSpec.describe "1" do
 
-  app = Rake.application
-  app.load_rakefile
-
   before(:all)do
-    app['create'].invoke
+    create_temp_file('C:\test_folder\temp_file.txt')
   end
 
   after(:all)do
-    app['delete'].invoke
+    delete_temp_file('C:\test_folder\temp_file.txt')
   end
 
   it 'SPAWN and INCLUDE' do
@@ -90,5 +87,5 @@ RSpec.describe "1" do
     expect(/Minimum = \d+ms, Maximum = \d+ms, Average = \d+ms/.match?(file_data)).to be(true)
     file.close
   end
-
+  
 end
