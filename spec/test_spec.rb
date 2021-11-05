@@ -2,7 +2,7 @@ require 'fileutils'
 require 'rake'
 require './functions/test_functions'
 
-RSpec.describe "1" do
+RSpec.describe "Work with SPAWN" do
 
   before(:all)do
     create_temp_file('C:\test_folder\temp_file.txt')
@@ -87,5 +87,5 @@ RSpec.describe "1" do
     expect(/Minimum = \d+ms, Maximum = \d+ms, Average = \d+ms/.match?(file_data)).to be(true)
     file.close
   end
-  
+
 end
