@@ -1,0 +1,18 @@
+desc "Creating directory with temp file"
+task :create do
+  path = 'C:\test_folder\temp_file.txt'
+  dir = File.dirname(path)
+
+  unless File.directory?(dir)
+    FileUtils.mkdir_p(dir)
+  end
+
+  a = File.new(path, 'w+')
+  a.close
+end
+
+desc 'Deleting temp file'
+task :delete do
+  path = 'C:\test_folder\temp_file.txt'
+  FileUtils.rm_rf(path)
+end
