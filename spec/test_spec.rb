@@ -9,11 +9,9 @@ RSpec.describe "Work with SPAWN" do
   end
 
   it 'SPAWN and INCLUDE' do
-    #expected_data = 'Approximate round trip times in milli-seconds:'
-    expected_data = TestData::EXPECTED_APPROXIMATE
-    spn = spawn(TestData::PING_LOCALHOST, :out=>[TestData::TEMP_FILE_PATH, TestData::OUTWRITEPLUS])
+    expected_data = TestData::EXPECTED_DATA[:EXPECTED_APPROXIMATE]
+    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
     Process.wait spn
-    #success?
     file = File.open(TestData::TEMP_FILE_PATH)
     file_data = file.read
     expect(file_data).to include(expected_data)
@@ -21,10 +19,9 @@ RSpec.describe "Work with SPAWN" do
   end
 
   it 'SPAWN and END WITH' do
-    expected_data = TestData::EXPECTED_AVERAGE
-    spn = spawn(TestData::PING_LOCALHOST, :out=>[TestData::TEMP_FILE_PATH, TestData::OUTWRITEPLUS])
+    expected_data = TestData::EXPECTED_DATA[:EXPECTED_AVERAGE]
+    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
     Process.wait spn
-    #success?
     file = File.open(TestData::TEMP_FILE_PATH)
     file_data = file.read.strip
     expect(file_data).to end_with(expected_data)
@@ -33,11 +30,9 @@ RSpec.describe "Work with SPAWN" do
 
 
   it 'SPAWN and START WITH' do
-    #expected_data = 'Pinging DESKTOP-MRO0O4C'
-    expected_data = TestData::EXPECTED_DESKTOP
-    spn = spawn(TestData::PING_LOCALHOST, :out=>[TestData::TEMP_FILE_PATH, TestData::OUTWRITEPLUS])
+    expected_data = TestData::EXPECTED_DATA[:EXPECTED_DESKTOP]
+    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
     Process.wait spn
-    #success?
     file = File.open(TestData::TEMP_FILE_PATH)
     file_data = file.read.strip
     expect(file_data).to start_with(expected_data)
@@ -45,9 +40,8 @@ RSpec.describe "Work with SPAWN" do
   end
 
   it 'SPAWN and BE AN(STRING)' do
-    spn = spawn(TestData::PING_LOCALHOST, :out=>[TestData::TEMP_FILE_PATH, TestData::OUTWRITEPLUS])
+    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
     Process.wait spn
-    #success?
     file = File.open(TestData::TEMP_FILE_PATH)
     file_data = file.read.strip
     expect(file_data).to be_an(String)
@@ -55,11 +49,9 @@ RSpec.describe "Work with SPAWN" do
   end
 
   it 'SPAWN and MATCH' do
-    spn = spawn(TestData::PING_LOCALHOST, :out=>[TestData::TEMP_FILE_PATH, TestData::OUTWRITEPLUS])
-    #match_string = 'Ping statistics for ::1:'
-    match_string = TestData::EXPECTED_STATISTICS
+    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
+    match_string = TestData::EXPECTED_DATA[:EXPECTED_STATISTICS]
     Process.wait spn
-    #success?
     file = File.open(TestData::TEMP_FILE_PATH)
     file_data = file.read.strip
     expect(file_data).to match(match_string)
@@ -67,11 +59,9 @@ RSpec.describe "Work with SPAWN" do
   end
 
   it 'SPAWN and NOT MATCH' do
-    spn = spawn(TestData::PING_LOCALHOST, :out=>[TestData::TEMP_FILE_PATH, TestData::OUTWRITEPLUS])
-    #match_string = 'Hello World'
-    match_string = TestData::EXPECTED_HELLO
+    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
+    match_string = TestData::EXPECTED_DATA[:EXPECTED_HELLO]
     Process.wait spn
-    #success?
     file = File.open(TestData::TEMP_FILE_PATH)
     file_data = file.read.strip
     expect(file_data).not_to match(match_string)
@@ -79,12 +69,12 @@ RSpec.describe "Work with SPAWN" do
   end
 
   it 'REGEX' do
-    spn = spawn(TestData::PING_LOCALHOST, :out=>[TestData::TEMP_FILE_PATH, TestData::OUTWRITEPLUS])
+    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
     Process.wait spn
     #success?
     file = File.open(TestData::TEMP_FILE_PATH)
     file_data = file.read.strip
-    expect(TestData::REGTEMPLATE.match?(file_data)).to be(true)
+    expect(/Minimum = \d+ms, Maximum = \d+ms, Average = \d+ms/.match?(file_data)).to be(true)
     file.close
   end
 
