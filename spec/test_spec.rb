@@ -1,5 +1,3 @@
-require 'pry'
-require './functions/test_commands'
 RSpec.describe "Work with SPAWN" do
 
   before(:all)do
