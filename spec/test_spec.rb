@@ -9,56 +9,48 @@ RSpec.describe "Work with SPAWN" do
   end
 
   it 'SPAWN and INCLUDE' do
+    TestCommand.new('cmd.exe', '/c ping localhost')
     expected_data = TestData::EXPECTED_DATA[:approximate]
-    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
-    Process.wait spn
     file_data = File.read(TestData::TEMP_FILE_PATH).strip
     expect(file_data).to include(expected_data)
   end
 
   it 'SPAWN and END WITH' do
+    TestCommand.new('cmd.exe', '/c ping localhost')
     expected_data = TestData::EXPECTED_DATA[:average]
-    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
-    Process.wait spn
     file_data = File.read(TestData::TEMP_FILE_PATH).strip
     expect(file_data).to end_with(expected_data)
   end
 
-
   it 'SPAWN and START WITH' do
+    TestCommand.new('cmd.exe', '/c ping localhost')
     expected_data = TestData::EXPECTED_DATA[:desktop]
-    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
-    Process.wait spn
     file_data = File.read(TestData::TEMP_FILE_PATH).strip
     expect(file_data).to start_with(expected_data)
   end
 
   it 'SPAWN and BE AN(STRING)' do
-    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
-    Process.wait spn
+    TestCommand.new('cmd.exe', '/c ping localhost')
     file_data = File.read(TestData::TEMP_FILE_PATH).strip
     expect(file_data).to be_an(String)
   end
 
   it 'SPAWN and MATCH' do
-    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
+    TestCommand.new('cmd.exe', '/c ping localhost')
     match_string = TestData::EXPECTED_DATA[:statistics]
-    Process.wait spn
     file_data = File.read(TestData::TEMP_FILE_PATH).strip
     expect(file_data).to match(match_string)
   end
 
   it 'SPAWN and NOT MATCH' do
-    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
+    TestCommand.new('cmd.exe', '/c ping localhost')
     match_string = TestData::EXPECTED_DATA[:hello]
-    Process.wait spn
     file_data = File.read(TestData::TEMP_FILE_PATH).strip
     expect(file_data).not_to match(match_string)
   end
 
   it 'REGEX' do
-    spn = spawn('ping localhost', :out=>[TestData::TEMP_FILE_PATH, 'w+'])
-    Process.wait spn
+    TestCommand.new('cmd.exe', '/c ping localhost')
     file_data = File.read(TestData::TEMP_FILE_PATH).strip
     expect(/Minimum = \d+ms, Maximum = \d+ms, Average = \d+ms/.match?(file_data)).to be(true)
   end
