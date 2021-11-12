@@ -1,4 +1,4 @@
-class TestFunctions
+class CreateDeleteTempFile
   def initialize(path, name)
     @path = path
     @name = name
